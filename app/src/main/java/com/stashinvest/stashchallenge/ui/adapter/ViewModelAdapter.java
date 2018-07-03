@@ -16,13 +16,11 @@ public class ViewModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final List<BaseViewModel> viewModels;
     private final SparseArrayCompat<BaseViewModel> viewTypeMap;
 
-
     @Inject
     public ViewModelAdapter() {
         viewModels = new ArrayList<>();
         viewTypeMap = new SparseArrayCompat<>();
     }
-
 
     public void setViewModels(Collection<? extends BaseViewModel> viewModels) {
         this.viewModels.clear();
@@ -31,18 +29,15 @@ public class ViewModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
     }
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return viewTypeMap.get(viewType).createViewHolder(parent);
     }
 
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         viewModels.get(position).bindViewHolder(holder);
     }
-
 
     @Override
     public int getItemCount() {
@@ -54,7 +49,6 @@ public class ViewModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         return viewModels.get(position).getViewType().getId();
     }
-
 
     private void addAll(Collection<? extends BaseViewModel> viewModels) {
         if (viewModels == null) {

@@ -72,6 +72,7 @@ public class MainFragment extends Fragment implements MainContract.MainView {
         super.onCreate(savedInstanceState);
         App.getInstance().getAppComponent().inject(this);
         mainPresenter.attachView(this);
+        mainPresenter.bind(this);
     }
 
     @Nullable
@@ -79,7 +80,6 @@ public class MainFragment extends Fragment implements MainContract.MainView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         unbinder = ButterKnife.bind(this, view);
-        mainPresenter.bind(this);
 
         searchView.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -100,47 +100,6 @@ public class MainFragment extends Fragment implements MainContract.MainView {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-//    @Override
-//    public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-//        progressBar.setVisibility(GONE); //change to hideProgress()
-//
-//        if (response.isSuccessful()) {
-//            List<ImageResult> images = response.body().getImages();
-//            updateImages(images);
-//        } else {
-//            //todo - show error
-//        }
-//    }
-
-//    @Override
-//    public void onFailure(Call<ImageResponse> call, Throwable t) {
-//        progressBar.setVisibility(GONE);
-//
-//        //todo - show error
-//        showError(t.getMessage());
-//    }
-
-//    private void search() {
-//        progressBar.setVisibility(View.VISIBLE);
-//
-//        Call<ImageResponse> call = gettyImageService.searchImages(searchView.getText().toString());
-//        call.enqueue(this);
-//    }
-
-//    private void updateImages(List<ImageResult> images) {
-//        List<BaseViewModel> viewModels = new ArrayList<>();
-//        int i = 0;
-//        for (ImageResult imageResult : images) {
-//            viewModels.add(gettyImageFactory.createGettyImageViewModel(i++, imageResult, this::onImageLongPress));
-//        }
-//        adapter.setViewModels(viewModels);
-//    }
-
-//    public void onImageLongPress(String id, String uri) {
-//        //todo - implement new feature
-//        showError("Hello Test");
-//    }
 
     @Override
     public void showProgress() {
@@ -176,7 +135,7 @@ public class MainFragment extends Fragment implements MainContract.MainView {
     @Override
     public void showPopUp() {
         //show pop up from presenter
-
+        Toast.makeText(getContext(), "hello", Toast.LENGTH_LONG).show();
     }
 
     @Override

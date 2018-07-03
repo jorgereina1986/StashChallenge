@@ -1,6 +1,5 @@
 package com.stashinvest.stashchallenge.ui.presenter.main;
 
-import com.stashinvest.stashchallenge.api.model.ImageResponse;
 import com.stashinvest.stashchallenge.ui.presenter.BaseView;
 import com.stashinvest.stashchallenge.ui.viewmodel.BaseViewModel;
 

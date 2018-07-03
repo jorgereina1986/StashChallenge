@@ -45,13 +45,14 @@ public class MainPresenter extends BasePresenter<MainContract.MainView>
 
     @Override
     public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-        view.hideProgress();
+        mainView.hideProgress();
 
         if (response.isSuccessful()) {
             List<ImageResult> images = response.body().getImages();
             updateImages(images);
         } else {
-            view.hideProgress();
+            //TODO - add error message
+            view.showError(response.code()+"");
         }
     }
 
@@ -61,13 +62,12 @@ public class MainPresenter extends BasePresenter<MainContract.MainView>
         for (ImageResult imageResult : images) {
             viewModels.add(gettyImageFactory.createGettyImageViewModel(i++, imageResult, this::onImageLongPress));
         }
-
-        mainView.showSearchedImages(viewModels);
+        view.showSearchedImages(viewModels);
     }
 
     @Override
     public void onFailure(Call<ImageResponse> call, Throwable t) {
-
+        view.showError(t.getMessage());
     }
 
     @Override
@@ -79,11 +79,7 @@ public class MainPresenter extends BasePresenter<MainContract.MainView>
 
     @Override
     public void onPopUpLaunched() {
-
-    }
-
-    private void getImages(String searchQuery) {
-
+        launchPopUp();
     }
 
     private void launchPopUp() {
