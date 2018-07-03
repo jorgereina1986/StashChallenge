@@ -18,8 +18,6 @@ import android.widget.Toast;
 import com.stashinvest.stashchallenge.App;
 import com.stashinvest.stashchallenge.R;
 import com.stashinvest.stashchallenge.api.GettyImageService;
-import com.stashinvest.stashchallenge.api.model.ImageResponse;
-import com.stashinvest.stashchallenge.api.model.ImageResult;
 import com.stashinvest.stashchallenge.ui.adapter.ViewModelAdapter;
 import com.stashinvest.stashchallenge.ui.factory.GettyImageFactory;
 import com.stashinvest.stashchallenge.ui.presenter.main.MainContract;
@@ -27,7 +25,6 @@ import com.stashinvest.stashchallenge.ui.presenter.main.MainPresenter;
 import com.stashinvest.stashchallenge.ui.viewmodel.BaseViewModel;
 import com.stashinvest.stashchallenge.util.SpaceItemDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,11 +33,6 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.view.View.GONE;
 
 public class MainFragment extends Fragment implements MainContract.MainView {
     @Inject
