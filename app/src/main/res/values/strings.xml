@@ -7,4 +7,6 @@
 
     <string name="search_hint">Search Phrase</string>
     <string name="metadata_title_format">%1$s by %2$s</string>
+    <string name="metadata_response_fail">Metadata Response not successful</string>
+    <string name="similar_images_response_fail">Similar images response not successful</string>
 </resources>

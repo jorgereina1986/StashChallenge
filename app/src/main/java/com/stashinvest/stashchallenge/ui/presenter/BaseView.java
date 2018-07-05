@@ -10,11 +10,5 @@ public interface BaseView {
 
     void hideProgress();
 
-    void showUnauthorizedError();
-
-    void showEmpty();
-
     void showError(String errorMessage);
-
-//    void showMessageLayout(boolean show);
 }

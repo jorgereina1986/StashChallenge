@@ -14,7 +14,6 @@ public interface MainContract {
     interface Presenter {
 
         void onImageSearched(String searchQuery);
-        void onPopUpLaunched();
 
         void onImageLongPress(String id, String uri);
     }
@@ -22,6 +21,7 @@ public interface MainContract {
     interface MainView extends BaseView {
 
         void showSearchedImages(List<BaseViewModel> imageResponseList);
+
         void showPopUp(String id, String uri);
 
     }

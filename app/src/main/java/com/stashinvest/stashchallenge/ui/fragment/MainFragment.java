@@ -105,16 +105,6 @@ public class MainFragment extends Fragment implements MainContract.MainView {
     }
 
     @Override
-    public void showUnauthorizedError() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
     public void showError(String errorMessage) {
         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG);
     }
@@ -127,7 +117,6 @@ public class MainFragment extends Fragment implements MainContract.MainView {
 
     @Override
     public void showPopUp(String id, String uri) {
-
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.addToBackStack(null);
         PopUpDialogFragment popUpDialogFragment = PopUpDialogFragment.newInstance(id, uri);

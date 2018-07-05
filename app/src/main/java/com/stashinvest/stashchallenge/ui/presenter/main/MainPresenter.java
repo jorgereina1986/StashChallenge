@@ -1,15 +1,10 @@
 package com.stashinvest.stashchallenge.ui.presenter.main;
 
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.stashinvest.stashchallenge.api.GettyImageService;
 import com.stashinvest.stashchallenge.api.model.ImageResponse;
 import com.stashinvest.stashchallenge.api.model.ImageResult;
 import com.stashinvest.stashchallenge.ui.adapter.ViewModelAdapter;
 import com.stashinvest.stashchallenge.ui.factory.GettyImageFactory;
-import com.stashinvest.stashchallenge.ui.fragment.PopUpDialogFragment;
 import com.stashinvest.stashchallenge.ui.presenter.BasePresenter;
 import com.stashinvest.stashchallenge.ui.viewmodel.BaseViewModel;
 
@@ -53,7 +48,6 @@ public class MainPresenter extends BasePresenter<MainContract.MainView>
             List<ImageResult> images = response.body().getImages();
             updateImages(images);
         } else {
-            //TODO - add error message
             view.showError(response.code()+"");
         }
     }
@@ -80,32 +74,7 @@ public class MainPresenter extends BasePresenter<MainContract.MainView>
     }
 
     @Override
-    public void onPopUpLaunched() {
-        launchPopUp();
-    }
-
-    @Override
     public void onImageLongPress(String id, String uri) {
-
         mainView.showPopUp(id, uri);
     }
-
-    private void launchPopUp() {
-
-//        PopUpDialogFragment popUpDialogFragment = PopUpDialogFragment.newInstance();
-
-    }
-
-//    public void onImageLongPress(String id, String uri) {
-//        //todo - implement new feature
-//        mainView.showError("Hello Test");
-//
-//        Toast.makeText(getContext(), "Test", Toast.LENGTH_LONG).show();
-//        Log.d("lagarto", "onImageLongPress: " + id + " : " + uri);
-//
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.addToBackStack(null);
-//        PopUpDialogFragment popUpDialogFragment = PopUpDialogFragment.newInstance(id, uri);
-//        popUpDialogFragment.show(fragmentTransaction, "popupdialog");
-//    }
 }

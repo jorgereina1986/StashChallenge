@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +35,6 @@ public class PopUpDialogFragment extends DialogFragment {
 
     private static final String KEY_ID = "id";
     private static final String KEY_URI = "uri";
-    private static final String TAG = PopUpDialogFragment.class.getSimpleName() + ": ";
 
     @Inject
     GettyImageService gettyImageService;
@@ -53,8 +51,6 @@ public class PopUpDialogFragment extends DialogFragment {
     ImageView similarImageView3;
     @BindView(R.id.title_view)
     TextView titleView;
-//    @BindView(R.id.progress_bar)
-//    ProgressBar progressBar;
 
     Unbinder unbinder;
 
@@ -93,7 +89,6 @@ public class PopUpDialogFragment extends DialogFragment {
     }
 
     private void imageMetadata(String id) {
-//        progressBar.setVisibility(View.VISIBLE);
         Call<MetadataResponse> call = gettyImageService.getImageMetadata(id);
         call.enqueue(new Callback<MetadataResponse>() {
             @Override
@@ -103,8 +98,7 @@ public class PopUpDialogFragment extends DialogFragment {
                     List<Metadata> metadataList = response.body().getMetadata();
                     titleView.setText(metadataList.get(0).getTitle());
                 } else {
-                    //todo show error
-                    Toast.makeText(getContext(), "Metadata Response not successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getString(R.string.metadata_response_fail), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -116,7 +110,6 @@ public class PopUpDialogFragment extends DialogFragment {
     }
 
     private void similarImages(String id) {
-//        progressBar.setVisibility(View.VISIBLE);
         Call<ImageResponse> call = gettyImageService.getSimilarImages(id);
         call.enqueue(new Callback<ImageResponse>() {
             @Override
@@ -145,15 +138,13 @@ public class PopUpDialogFragment extends DialogFragment {
                     }
 
                 } else {
-                    //todo - show error
-                    Toast.makeText(getContext(), "Similar images response not successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getString(R.string.similar_images_response_fail), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ImageResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-
             }
         });
     }
