@@ -3,6 +3,7 @@ package com.stashinvest.stashchallenge.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -125,9 +126,12 @@ public class MainFragment extends Fragment implements MainContract.MainView {
     }
 
     @Override
-    public void showPopUp() {
-        //show pop up from presenter
-        Toast.makeText(getContext(), "hello", Toast.LENGTH_LONG).show();
+    public void showPopUp(String id, String uri) {
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        PopUpDialogFragment popUpDialogFragment = PopUpDialogFragment.newInstance(id, uri);
+        popUpDialogFragment.show(fragmentTransaction, "popupdialog");
     }
 
     @Override

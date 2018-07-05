@@ -15,12 +15,14 @@ public interface MainContract {
 
         void onImageSearched(String searchQuery);
         void onPopUpLaunched();
+
+        void onImageLongPress(String id, String uri);
     }
 
     interface MainView extends BaseView {
 
         void showSearchedImages(List<BaseViewModel> imageResponseList);
-        void showPopUp();
+        void showPopUp(String id, String uri);
 
     }
 }
