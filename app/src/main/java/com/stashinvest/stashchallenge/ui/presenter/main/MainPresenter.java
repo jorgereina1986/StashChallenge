@@ -1,8 +1,5 @@
 package com.stashinvest.stashchallenge.ui.presenter.main;
 
-import android.support.annotation.MainThread;
-import android.util.Log;
-
 import com.stashinvest.stashchallenge.api.GettyImageService;
 import com.stashinvest.stashchallenge.api.model.ImageResponse;
 import com.stashinvest.stashchallenge.api.model.ImageResult;
