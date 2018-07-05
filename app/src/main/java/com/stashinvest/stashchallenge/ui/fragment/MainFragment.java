@@ -34,6 +34,7 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class MainFragment extends Fragment implements MainContract.MainView {
     @Inject

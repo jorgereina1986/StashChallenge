@@ -1,5 +1,8 @@
 package com.stashinvest.stashchallenge.ui.presenter.main;
 
+import android.support.annotation.MainThread;
+import android.util.Log;
+
 import com.stashinvest.stashchallenge.api.GettyImageService;
 import com.stashinvest.stashchallenge.api.model.ImageResponse;
 import com.stashinvest.stashchallenge.api.model.ImageResult;
@@ -13,6 +16,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,8 +77,33 @@ public class MainPresenter extends BasePresenter<MainContract.MainView>
     @Override
     public void onImageSearched(String searchQuery) {
         view.showProgress();
-        Call<ImageResponse> call = gettyImageService.searchImages(searchQuery);
-        call.enqueue(this);
+
+        Observable<ImageResponse> imageResponseObservable = gettyImageService.searchImages(searchQuery)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+        imageResponseObservable.subscribe(new Observer<ImageResponse>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(ImageResponse imageResponse) {
+                    List<ImageResult> images = imageResponse.getImages();
+                    updateImages(images);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                view.showError(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                view.hideProgress();
+            }
+        });
     }
 
     @Override

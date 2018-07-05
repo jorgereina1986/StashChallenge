@@ -5,6 +5,7 @@ import com.stashinvest.stashchallenge.api.model.MetadataResponse;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 
 public class GettyImageService {
@@ -18,7 +19,7 @@ public class GettyImageService {
     public GettyImageService() {
     }
 
-    public Call<ImageResponse> searchImages(String phrase) {
+    public Observable<ImageResponse> searchImages(String phrase) {
         return api.searchImages(phrase, FIELDS, SORT_ORDER);
     }
 
