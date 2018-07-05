@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.stashinvest.stashchallenge.App;
@@ -27,9 +26,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class PopUpDialogFragment extends DialogFragment {
 
@@ -89,62 +90,81 @@ public class PopUpDialogFragment extends DialogFragment {
     }
 
     private void imageMetadata(String id) {
-        Call<MetadataResponse> call = gettyImageService.getImageMetadata(id);
-        call.enqueue(new Callback<MetadataResponse>() {
-            @Override
-            public void onResponse(Call<MetadataResponse> call, Response<MetadataResponse> response) {
+        Observable<MetadataResponse> metadataResponseObservable =
+                gettyImageService
+                        .getImageMetadata(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
 
-                if (response.isSuccessful()) {
-                    List<Metadata> metadataList = response.body().getMetadata();
-                    titleView.setText(metadataList.get(0).getTitle());
-                } else {
-                    Toast.makeText(getContext(), getString(R.string.metadata_response_fail), Toast.LENGTH_LONG).show();
-                }
+        metadataResponseObservable.subscribe(new Observer<MetadataResponse>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
-            public void onFailure(Call<MetadataResponse> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onNext(MetadataResponse metadataResponse) {
+                List<Metadata> metadataList = metadataResponse.getMetadata();
+                titleView.setText(metadataList.get(0).getTitle());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //Tost
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }
 
     private void similarImages(String id) {
-        Call<ImageResponse> call = gettyImageService.getSimilarImages(id);
-        call.enqueue(new Callback<ImageResponse>() {
+        Observable<ImageResponse> imageResponseObservable =
+                gettyImageService
+                        .getSimilarImages(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+
+        imageResponseObservable.subscribe(new Observer<ImageResponse>() {
             @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+            public void onSubscribe(Disposable d) {
 
-                if (response.isSuccessful()) {
-                    List<ImageResult> images = response.body().getImages();
-
-                    if (images.size() >= 3) {
-                        setImagesToIv(images.get(0).getThumbUri(), similarImageView1);
-                        setImagesToIv(images.get(1).getThumbUri(), similarImageView2);
-                        setImagesToIv(images.get(2).getThumbUri(), similarImageView3);
-                    } else if (images.size() == 2) {
-                        setImagesToIv(images.get(0).getThumbUri(), similarImageView1);
-                        setImagesToIv(images.get(1).getThumbUri(), similarImageView2);
-                        Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView3);
-
-                    } else if (images.size() == 1) {
-                        setImagesToIv(images.get(0).getThumbUri(), similarImageView1);
-                        Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView2);
-                        Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView3);
-                    } else {
-                        Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView1);
-                        Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView2);
-                        Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView3);
-                    }
-
-                } else {
-                    Toast.makeText(getContext(), getString(R.string.similar_images_response_fail), Toast.LENGTH_LONG).show();
-                }
             }
 
             @Override
-            public void onFailure(Call<ImageResponse> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onNext(ImageResponse imageResponse) {
+                List<ImageResult> images = imageResponse.getImages();
+                if (images.size() >= 3) {
+                    setImagesToIv(images.get(0).getThumbUri(), similarImageView1);
+                    setImagesToIv(images.get(1).getThumbUri(), similarImageView2);
+                    setImagesToIv(images.get(2).getThumbUri(), similarImageView3);
+                } else if (images.size() == 2) {
+                    setImagesToIv(images.get(0).getThumbUri(), similarImageView1);
+                    setImagesToIv(images.get(1).getThumbUri(), similarImageView2);
+                    Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView3);
+
+                } else if (images.size() == 1) {
+                    setImagesToIv(images.get(0).getThumbUri(), similarImageView1);
+                    Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView2);
+                    Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView3);
+                } else {
+                    Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView1);
+                    Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView2);
+                    Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(similarImageView3);
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //toast
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }

@@ -24,11 +24,11 @@ public class GettyImageService {
     }
 
 
-    public Call<MetadataResponse> getImageMetadata(String id) {
+    public Observable<MetadataResponse> getImageMetadata(String id) {
         return api.getImageMetadata(id);
     }
 
-    public Call<ImageResponse> getSimilarImages(String id) {
+    public Observable<ImageResponse> getSimilarImages(String id) {
         return api.getSimilarImages(id);
     }
 }

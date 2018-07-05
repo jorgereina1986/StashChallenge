@@ -16,8 +16,8 @@ public interface GettyImagesApi {
                                            @Query("sort_order") String sortOrder);
 
     @GET("images/{id}")
-    Call<MetadataResponse> getImageMetadata(@Path("id") String id);
+    Observable<MetadataResponse> getImageMetadata(@Path("id") String id);
 
     @GET("images/{id}/similar")
-    Call<ImageResponse> getSimilarImages(@Path("id") String id);
+    Observable<ImageResponse> getSimilarImages(@Path("id") String id);
 }
