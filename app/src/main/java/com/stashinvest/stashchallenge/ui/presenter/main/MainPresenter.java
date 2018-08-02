@@ -31,7 +31,7 @@ public class MainPresenter extends BasePresenter<MainContract.MainView>
     @Inject
     GettyImageService gettyImageService;
 
-    MainContract.MainView mainView;
+    private MainContract.MainView mainView;
 
     @Inject
     public MainPresenter() {

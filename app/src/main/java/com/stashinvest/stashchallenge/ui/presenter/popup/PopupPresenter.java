@@ -1,9 +1,5 @@
 package com.stashinvest.stashchallenge.ui.presenter.popup;
 
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
-import com.stashinvest.stashchallenge.R;
 import com.stashinvest.stashchallenge.api.GettyImageService;
 import com.stashinvest.stashchallenge.api.model.ImageResponse;
 import com.stashinvest.stashchallenge.api.model.ImageResult;
@@ -23,12 +19,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PopupPresenter extends BasePresenter<PopupContract.PopupView>
         implements PopupContract.Presenter {
-
-
     @Inject
     GettyImageService gettyImageService;
 
-    PopupContract.PopupView popupView;
+    private PopupContract.PopupView popupView;
 
     @Inject
     public PopupPresenter() {
@@ -119,9 +113,6 @@ public class PopupPresenter extends BasePresenter<PopupContract.PopupView>
                 } else {
                     popupView.showSimilarImages(null, null, null);
                 }
-
-
-
             }
 
             @Override
